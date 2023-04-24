@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AppoinmentBanner = () => {
+const AvailableAppoinment = () => {
     return (
         <div>
 
@@ -8,4 +8,4 @@ const AppoinmentBanner = () => {
     );
 };
 
-export default AppoinmentBanner;
+export default AvailableAppoinment;
