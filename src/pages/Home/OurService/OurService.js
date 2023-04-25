@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OurService = (service) => {
+const OurService = ({ service }) => {
     console.log(service)
     return (
         <div className="card lg:max-w-lg bg-base-100 shadow-xl my" >
