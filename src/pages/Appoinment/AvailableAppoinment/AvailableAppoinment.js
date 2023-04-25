@@ -8,7 +8,6 @@ import AvailableServices from '../AvailableServices/AvailableServices';
 const AvailableAppoinment = ({ date }) => {
     const [services, setServices] = useState([]);
     const [treatment, setTreatment] = useState(null);
-    console.log(treatment)
 
     useEffect(() => {
         fetch('service.json')
@@ -31,7 +30,7 @@ const AvailableAppoinment = ({ date }) => {
                 }
             </div>
             {
-                treatment && <BookingModals treatment={treatment}></BookingModals>
+                treatment && <BookingModals date={date} treatment={treatment}></BookingModals>
             }
         </div>
     );

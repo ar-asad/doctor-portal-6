@@ -10,7 +10,7 @@ const Navber = () => {
         <li><Link to='/appointment'>Appointment</Link></li>
         <li><Link to='/reviews'>Review</Link></li>
         <li><Link to='/contact'>Contact</Link></li>
-        <li><Link to='/'>Login</Link></li>
+        <li><Link to='/login'>Login</Link></li>
     </>
     return (
         <div className="navbar bg-base-100" >
