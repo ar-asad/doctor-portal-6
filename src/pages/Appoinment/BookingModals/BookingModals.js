@@ -1,11 +1,48 @@
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContex } from '../../../context/AuthProvider/AuthProvider';
+import { toast } from 'react-hot-toast';
 
-const BookingModals = ({ treatment, date }) => {
+const BookingModals = ({ treatment, setTreatment, date }) => {
     const { _id, name, slots } = treatment;
+    const { user } = useContext(AuthContex);
 
-    const handleBooking = () => {
+    const formattedDate = format(date, 'PP');
 
+    const handleBooking = (event) => {
+        event.preventDefault();
+        const slot = event.target.slot.value;
+        const phone = event.target.phone.value;
+        const booking = {
+            treatmentId: _id,
+            treatment: name,
+            email: user.email,
+            patient: user.displayName,
+            appoinmentDate: formattedDate,
+            slot,
+            phone
+        }
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setTreatment(null)
+                // toast.success('Booking confirmed')
+                if (data.acknowledged) {
+                    toast.success(`Appoinment is set,${formattedDate} at ${slot}`)
+                }
+                // else {
+                //     toast.error(`Already have and appoinment on ${data.booking?.date} at ${data.booking?.slot}`)
+                // }
+                //     refetch();
+                //     // setTreatment(null);
+            })
     }
 
     return (
@@ -27,8 +64,8 @@ const BookingModals = ({ treatment, date }) => {
                                 >{slot}</option>)
                             }
                         </select>
-                        {/* <input type="text" name='name' disabled value={user?.displayName || ''} className="input input-bordered w-full max-w-xs" />
-                        <input type="name" name='email' disabled value={user?.email || ''} className="input input-bordered w-full max-w-xs" /> */}
+                        <input type="text" name='name' disabled value={user?.displayName || ''} className="input input-bordered w-full max-w-xs" />
+                        <input type="name" name='email' disabled value={user?.email || ''} className="input input-bordered w-full max-w-xs" />
                         <input type="text" name='phone' placeholder="Phone Number" className="input input-bordered w-full max-w-xs" />
                         <input type="submit" value="submit" className="btn btn-secondary w-full max-w-xs" />
                     </form  >

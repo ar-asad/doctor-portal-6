@@ -4,16 +4,30 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import BookingModals from '../BookingModals/BookingModals';
 import AvailableServices from '../AvailableServices/AvailableServices';
+import { useQuery } from '@tanstack/react-query';
 
 const AvailableAppoinment = ({ date }) => {
-    const [services, setServices] = useState([]);
+    // const [services, setServices] = useState([]);
     const [treatment, setTreatment] = useState(null);
 
-    useEffect(() => {
-        fetch('service.json')
+    const { data: appoinmentOptions = [], isLoading } = useQuery({
+        queryKey: ['appoinmentOptions'],
+        queryFn: () => fetch('http://localhost:5000/appoinmentOptions')
             .then(res => res.json())
-            .then(data => setServices(data))
-    }, [])
+    })
+
+    // if we are use loading following this.......or above rules.....
+
+    // if (isLoading) {
+    //     return <h1>Loading........</h1>
+    // }
+
+
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/appoinmentOptions')
+    //         .then(res => res.json())
+    //         .then(data => setServices(data))
+    // }, [])
     return (
         <div>
             <div className='text-center my-12'>
@@ -22,7 +36,7 @@ const AvailableAppoinment = ({ date }) => {
             </div>
             <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9'>
                 {
-                    services.map(service => <AvailableServices
+                    appoinmentOptions.map(service => <AvailableServices
                         service={service}
                         key={service._id}
                         setTreatment={setTreatment}
@@ -30,7 +44,7 @@ const AvailableAppoinment = ({ date }) => {
                 }
             </div>
             {
-                treatment && <BookingModals date={date} treatment={treatment}></BookingModals>
+                treatment && <BookingModals date={date} treatment={treatment} setTreatment={setTreatment}></BookingModals>
             }
         </div>
     );

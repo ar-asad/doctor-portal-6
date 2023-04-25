@@ -1,18 +1,32 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../context/AuthProvider/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 
 const Register = () => {
-    const { createUser, googleSignIn } = useContext(AuthContex)
+    const { createUser, googleSignIn, updateUserProfile } = useContext(AuthContex)
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const navigate = useNavigate();
 
 
     const onSubmit = data => {
+        console.log(data.name)
         createUser(data.email, data.password)
             .then(result => {
                 console.log(result.user)
+                toast.success('User created Successfully!');
+                const userInfo = {
+                    displayName: data.name
+
+                }
+                updateUserProfile(userInfo)
+                    .then(() => {
+                        navigate('/')
+                    })
+                    .catch(e => console.error(e))
+
             })
             .catch(err => console.error(err))
     }
