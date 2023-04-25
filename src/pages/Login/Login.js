@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContex } from '../../context/AuthProvider/AuthProvider';
 
 const Login = () => {
+    const { signIn, googleSignIn } = useContext(AuthContex)
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        signIn(data.email, data.password)
+            .then(result => {
+                console.log(result.user)
+            })
+            .catch(err => console.error(err))
+    }
+    const handleGoogleSignIn = () => {
+        googleSignIn()
+            .then(result => console.log(result.user))
+            .catch(e => console.log(e.message))
+    }
 
 
     return (
@@ -74,7 +87,7 @@ const Login = () => {
 
                     <div className="divider" > OR</div >
                     <button
-                        // onClick={() => signInWithGoogle()}
+                        onClick={handleGoogleSignIn}
                         className="btn btn-outline" > Continue With Google</button >
                 </div >
             </div >

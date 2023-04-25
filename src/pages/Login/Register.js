@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContex } from '../../context/AuthProvider/AuthProvider';
 
 
 const Register = () => {
+    const { createUser, googleSignIn } = useContext(AuthContex)
     const { register, formState: { errors }, handleSubmit } = useForm();
 
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        createUser(data.email, data.password)
+            .then(result => {
+                console.log(result.user)
+            })
+            .catch(err => console.error(err))
+    }
+
+    const handleGoogleSignIn = () => {
+        googleSignIn()
+            .then(result => console.log(result.user))
+            .catch(e => console.log(e.message))
+    }
+
     return (
         <div className='flex h-screen justify-center items-center' >
             <div className="card w-96 bg-base-100 shadow-xl">
@@ -96,7 +111,7 @@ const Register = () => {
 
                     <div className="divider" > OR</div >
                     <button
-                        // onClick={() => signInWithGoogle()}
+                        onClick={handleGoogleSignIn}
                         className="btn btn-outline" > Continue With Google</button >
                 </div >
             </div >
