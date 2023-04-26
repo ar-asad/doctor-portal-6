@@ -1,14 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../context/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 
 
 const Register = () => {
     const { createUser, googleSignIn, updateUserProfile } = useContext(AuthContex)
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [createUserEmail, setCreateUserEmail] = useState('')
+    const [token] = useToken(createUserEmail)
     const navigate = useNavigate();
+
+    if (token) {
+        navigate('/')
+    }
 
 
     const onSubmit = data => {
@@ -41,21 +48,23 @@ const Register = () => {
         })
             .then(res => res.json())
             .then(data => {
-                getUserToken(email)
+                setCreateUserEmail(email)
             })
 
     }
-    const getUserToken = email => {
-        fetch(`http://localhost:5000/jwt?email=${email}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.accessToken) {
-                    localStorage.setItem('accessToken', data.accessToken)
-                    navigate('/')
 
-                }
-            })
-    }
+    // used it before make useToken hooks....
+    // const getUserToken = email => {
+    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.accessToken) {
+    //                 localStorage.setItem('accessToken', data.accessToken)
+    //                 navigate('/')
+
+    //             }
+    //         })
+    // }
 
     const handleGoogleSignIn = () => {
         googleSignIn()
