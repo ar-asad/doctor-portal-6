@@ -19,7 +19,7 @@ const AvailableAppoinment = ({ date }) => {
     // if we are use loading following this.......or above rules.....
 
     if (isLoading) {
-        return <h1>Loading........</h1>
+        return <h1 className='text-4xl text-red-500 text-center'>Loading........</h1>
     }
 
 

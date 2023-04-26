@@ -6,7 +6,10 @@ import About from '../../pages/About/About';
 import Appoinment from '../../pages/Appoinment/Appoinment/Appoinment';
 import Register from '../../pages/Login/Register';
 import Login from '../../pages/Login/Login';
-import Dashboard from '../../pages/Dashboard/Dashboard';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import DashboardLayout from '../../Layout/DashboardLayout/DashboardLayout';
+import Dashboard from '../../pages/Dashboard/Dashboard/Dashboard';
+import MyAppoinment from '../../pages/Dashboard/MyAppoinment/MyAppoinment';
 
 
 const router = createBrowserRouter([
@@ -34,11 +37,20 @@ const router = createBrowserRouter([
                 path: '/login',
                 element: <Login></Login>
             },
+
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: ([
             {
                 path: '/dashboard',
-                element: <Dashboard></Dashboard>
-            }
-        ]
+                element: <MyAppoinment></MyAppoinment>
+            },
+
+
+        ])
     }
 ]);
 export default router;
