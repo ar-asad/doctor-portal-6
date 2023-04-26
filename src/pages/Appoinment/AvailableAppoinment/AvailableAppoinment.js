@@ -9,18 +9,18 @@ import { useQuery } from '@tanstack/react-query';
 const AvailableAppoinment = ({ date }) => {
     // const [services, setServices] = useState([]);
     const [treatment, setTreatment] = useState(null);
-
-    const { data: appoinmentOptions = [], isLoading } = useQuery({
-        queryKey: ['appoinmentOptions'],
-        queryFn: () => fetch('http://localhost:5000/appoinmentOptions')
+    const formatedDate = format(date, 'PP');
+    const { data: appoinmentOptions, isLoading, refetch } = useQuery({
+        queryKey: ['appoinmentOptions', formatedDate],
+        queryFn: () => fetch(`http://localhost:5000/appoinmentOptions?date=${formatedDate}`)
             .then(res => res.json())
     })
 
     // if we are use loading following this.......or above rules.....
 
-    // if (isLoading) {
-    //     return <h1>Loading........</h1>
-    // }
+    if (isLoading) {
+        return <h1>Loading........</h1>
+    }
 
 
     // useEffect(() => {
@@ -44,7 +44,7 @@ const AvailableAppoinment = ({ date }) => {
                 }
             </div>
             {
-                treatment && <BookingModals date={date} treatment={treatment} setTreatment={setTreatment}></BookingModals>
+                treatment && <BookingModals date={date} treatment={treatment} setTreatment={setTreatment} refetch={refetch}></BookingModals>
             }
         </div>
     );

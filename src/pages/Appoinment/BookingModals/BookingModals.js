@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { AuthContex } from '../../../context/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
 
-const BookingModals = ({ treatment, setTreatment, date }) => {
+const BookingModals = ({ treatment, setTreatment, date, refetch }) => {
     const { _id, name, slots } = treatment;
     const { user } = useContext(AuthContex);
 
@@ -33,15 +33,14 @@ const BookingModals = ({ treatment, setTreatment, date }) => {
             .then(data => {
                 console.log(data);
                 setTreatment(null)
-                // toast.success('Booking confirmed')
                 if (data.acknowledged) {
                     toast.success(`Appoinment is set,${formattedDate} at ${slot}`)
+                    refetch()
                 }
-                // else {
-                //     toast.error(`Already have and appoinment on ${data.booking?.date} at ${data.booking?.slot}`)
-                // }
-                //     refetch();
-                //     // setTreatment(null);
+                else {
+                    toast.error(data.message)
+                }
+
             })
     }
 
