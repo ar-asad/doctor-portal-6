@@ -21,7 +21,7 @@ const MyAppoinment = () => {
     })
 
     if (isLoading) {
-        <h2 className='text-4xl font-semibold'>Loading.....</h2>
+        return <h2 className='text-4xl font-semibold'>Loading.....</h2>
     }
     return (
         <div>

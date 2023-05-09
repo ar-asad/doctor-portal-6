@@ -8,6 +8,8 @@ const Login = () => {
     const { signIn, googleSignIn } = useContext(AuthContex)
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginUserEmail, setLoginUserEmail] = useState('');
+    const [loginError, setLoginError] = useState('');
+
     const [token] = useToken(loginUserEmail)
 
     let navigate = useNavigate();
@@ -26,7 +28,10 @@ const Login = () => {
                 console.log(result.user)
                 setLoginUserEmail(data.email)
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                console.error(err)
+                setLoginError(err.message);
+            })
     }
     const handleGoogleSignIn = () => {
         googleSignIn()
@@ -94,6 +99,7 @@ const Login = () => {
 
                             </label >
                         </div >
+                        <p className='text-red-500 font-semibold'>{loginError}</p>
                         {/* {signInError} */}
                         < input className='btn w-full max-w-xs text-white' type="submit" value='Login' />
                     </form >

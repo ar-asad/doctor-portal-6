@@ -11,11 +11,15 @@ const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [createUserEmail, setCreateUserEmail] = useState('')
     const [token] = useToken(createUserEmail)
+    const [passwordError, setPasswordError] = useState(null);
+
     const navigate = useNavigate();
 
     if (token) {
         navigate('/')
     }
+    console.log(passwordError)
+
 
 
     const onSubmit = data => {
