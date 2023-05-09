@@ -15,12 +15,14 @@ import AdminRoute from '../AdminRoute/AdminRoute';
 import AddDoctors from '../../pages/Dashboard/AddDoctors/AddDoctors';
 import ManageDoctors from '../../pages/Dashboard/ManageDoctors/ManageDoctors';
 import Payment from '../../pages/Dashboard/Payment/Payment';
+import DisplayError from '../../shared/DisplayError/DisplayError';
 
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <DisplayError></DisplayError>,
         children: [
             {
                 path: '/',
@@ -48,10 +50,11 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement: <DisplayError></DisplayError>,
         children: ([
             {
                 path: '/dashboard',
-                element: <MyAppoinment></MyAppoinment>
+                element: <MyAppoinment></MyAppoinment>,
             },
             {
                 path: '/dashboard/allusers',
