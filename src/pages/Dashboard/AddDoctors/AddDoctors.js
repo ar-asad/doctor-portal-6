@@ -8,7 +8,6 @@ const AddDoctors = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     const imageHostKey = process.env.REACT_APP_imgbb_key;
-    console.log(imageHostKey)
     const { data: specialties, isLoading } = useQuery({
         queryKey: ['specialty'],
         queryFn: async () => {
@@ -29,7 +28,6 @@ const AddDoctors = () => {
         })
             .then(res => res.json())
             .then(imgData => {
-                console.log(imgData)
                 if (imgData.success) {
                     console.log(imgData.data.url)
                     const doctor = {

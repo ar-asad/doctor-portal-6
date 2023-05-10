@@ -7,7 +7,6 @@ import useAdmin from '../../hooks/useAdmin';
 const AdminRoute = ({ children }) => {
     const { user, loading } = useContext(AuthContex);
     const [isAdmin, isAdminLoading] = useAdmin(user?.email)
-    console.log(user)
     const location = useLocation();
 
     if (loading || isAdminLoading) {
