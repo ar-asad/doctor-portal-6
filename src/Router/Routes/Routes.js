@@ -8,7 +8,6 @@ import Register from '../../pages/Login/Register';
 import Login from '../../pages/Login/Login';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import DashboardLayout from '../../Layout/DashboardLayout/DashboardLayout';
-import Dashboard from '../../pages/Dashboard/Dashboard/Dashboard';
 import MyAppoinment from '../../pages/Dashboard/MyAppoinment/MyAppoinment';
 import AllUsers from '../../pages/Dashboard/AllUsers/AllUsers';
 import AdminRoute from '../AdminRoute/AdminRoute';

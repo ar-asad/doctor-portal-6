@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../context/AuthProvider/AuthProvider';
 import useToken from '../../hooks/useToken';
+import GoogleLogin from './SocialLogin/GoogleLogin';
 
 const Login = () => {
-    const { signIn, googleSignIn } = useContext(AuthContex)
+    const { signIn, googleSignIn, setLoading } = useContext(AuthContex)
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const [loginError, setLoginError] = useState('');
@@ -31,6 +32,9 @@ const Login = () => {
             .catch(err => {
                 console.error(err)
                 setLoginError(err.message);
+            })
+            .finally(() => {
+                setLoading(false)
             })
     }
     const handleGoogleSignIn = () => {
@@ -99,16 +103,16 @@ const Login = () => {
 
                             </label >
                         </div >
-                        <p className='text-red-500 font-semibold'>{loginError}</p>
-                        {/* {signInError} */}
+                        <p className='text-red-500 font-semibold mb-2'>{loginError}</p>
                         < input className='btn w-full max-w-xs text-white' type="submit" value='Login' />
                     </form >
                     <p>New to Doctors Portal? <Link to='/register'><small className='text-secondary'>Create New Account</small></Link></p>
 
                     <div className="divider" > OR</div >
-                    <button
+                    {/* <button
                         onClick={handleGoogleSignIn}
-                        className="btn btn-outline" > Continue With Google</button >
+                        className="btn btn-outline" > Continue With Google</button > */}
+                    <GoogleLogin></GoogleLogin>
                 </div >
             </div >
         </div >

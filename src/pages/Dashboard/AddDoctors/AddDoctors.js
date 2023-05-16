@@ -2,10 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AddDoctors = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+
+    const navigate = useNavigate();
 
     const imageHostKey = process.env.REACT_APP_imgbb_key;
     const { data: specialties, isLoading } = useQuery({
@@ -50,8 +52,8 @@ const AddDoctors = () => {
                         .then(res => res.json)
                         .then(result => {
                             console.log(result)
-                            toast.success(`${data.name} is added successfully`);
-                            Navigate('/dashboard/managedoctors')
+                            toast.success(`Doctor ${data.name} is added successfully`);
+                            navigate('/dashboard/managedoctors')
                         })
 
                 }
@@ -151,8 +153,6 @@ const AddDoctors = () => {
 
                     </label >
                 </div >
-
-                {/* {signInError} */}
                 < input className='btn w-full max-w-xs text-white' type="submit" value='Add Doctor' />
             </form >
         </div>

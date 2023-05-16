@@ -4,29 +4,28 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../context/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
 import useToken from '../../hooks/useToken';
+import GoogleLogin from './SocialLogin/GoogleLogin';
 
 
 const Register = () => {
-    const { createUser, googleSignIn, updateUserProfile } = useContext(AuthContex)
+    const { createUser, updateUserProfile, setLoading } = useContext(AuthContex)
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [createUserEmail, setCreateUserEmail] = useState('')
     const [token] = useToken(createUserEmail)
-    const [passwordError, setPasswordError] = useState(null);
+    const [signInError, setSignInError] = useState(null);
 
     const navigate = useNavigate();
 
     if (token) {
         navigate('/')
     }
-    console.log(passwordError)
 
 
 
     const onSubmit = data => {
-        console.log(data.name)
         createUser(data.email, data.password)
             .then(result => {
-                console.log(result.user)
+                // console.log(result.user)
                 toast.success('User created Successfully!');
                 const userInfo = {
                     displayName: data.name
@@ -39,7 +38,13 @@ const Register = () => {
                     .catch(e => console.error(e))
 
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                console.error(err)
+                setSignInError(err.message)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }
     const saveUser = (name, email) => {
         const user = { name, email };
@@ -70,11 +75,6 @@ const Register = () => {
     //         })
     // }
 
-    const handleGoogleSignIn = () => {
-        googleSignIn()
-            .then(result => console.log(result.user))
-            .catch(e => console.log(e.message))
-    }
 
     return (
         <div className='flex h-screen justify-center items-center' >
@@ -157,15 +157,13 @@ const Register = () => {
 
                             </label >
                         </div >
-                        {/* {signInError} */}
+                        <p className='text-red-500 font-semibold mb-2'>{signInError}</p>
                         < input className='btn w-full max-w-xs text-white' type="submit" value='Sign Up' />
                     </form >
                     <p>Already have an account? <Link to='/login'><small className='text-secondary'>Please login</small></Link></p>
 
                     <div className="divider" > OR</div >
-                    <button
-                        onClick={handleGoogleSignIn}
-                        className="btn btn-outline" > Continue With Google</button >
+                    <GoogleLogin></GoogleLogin>
                 </div >
             </div >
         </div >

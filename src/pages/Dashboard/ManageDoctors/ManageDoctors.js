@@ -6,8 +6,6 @@ import { toast } from 'react-hot-toast';
 const ManageDoctors = () => {
     const [deletingDoctor, setDeletingDoctor] = useState(null)
 
-
-
     const { data: doctors, isLoading, refetch } = useQuery({
         queryKey: ['doctors'],
         queryFn: async () => {

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import BookingModals from '../BookingModals/BookingModals';
 import AvailableServices from '../AvailableServices/AvailableServices';
 import { useQuery } from '@tanstack/react-query';
+import { AuthContex } from '../../../context/AuthProvider/AuthProvider';
 
 const AvailableAppoinment = ({ date }) => {
     // const [services, setServices] = useState([]);
+    const { user } = useContext(AuthContex);
     const [treatment, setTreatment] = useState(null);
     const formatedDate = format(date, 'PP');
     const { data: appoinmentOptions, isLoading, refetch } = useQuery({
@@ -44,7 +45,7 @@ const AvailableAppoinment = ({ date }) => {
                 }
             </div>
             {
-                treatment && <BookingModals date={date} treatment={treatment} setTreatment={setTreatment} refetch={refetch}></BookingModals>
+                treatment && user && <BookingModals date={date} treatment={treatment} setTreatment={setTreatment} refetch={refetch}></BookingModals>
             }
         </div>
     );

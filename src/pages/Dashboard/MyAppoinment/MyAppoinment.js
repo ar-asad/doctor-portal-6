@@ -57,8 +57,6 @@ const MyAppoinment = () => {
                                                 to={`/dashboard/payment/${booking._id}`}
                                                 className='btn btn-primary btn-sm'
                                             >
-
-
                                                 Pay
                                             </Link>
                                         }

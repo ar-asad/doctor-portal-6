@@ -7,7 +7,11 @@ const AllUsers = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users');
+            const res = await fetch('http://localhost:5000/users', {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            });
             const data = await res.json();
             return data;
         }
@@ -26,9 +30,26 @@ const AllUsers = () => {
                     toast.success('Make admin successfull')
                     refetch()
                 }
+            });
+    }
+
+    const handleDeleteUser = (user) => {
+        fetch(`http://localhost:5000/users/Admin/${user._id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.deletedCount > 0) {
+                    console.log('aaaaaaa')
+                    refetch();
+                    toast.success(`User ${user.name} deleted successfully`)
+                }
+
             })
-
-
     }
 
     return (
@@ -52,7 +73,7 @@ const AllUsers = () => {
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>{user.role !== 'admin' && <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-xs btn-primary'>Make Admin</button>}</td>
-                                <td><button className='btn btn-sm btn-danger'>Delete</button></td>
+                                <td><button onClick={() => handleDeleteUser(user)} className='btn btn-sm btn-error'>Delete</button></td>
                             </tr>)
                         }
                     </tbody>
