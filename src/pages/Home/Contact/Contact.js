@@ -7,7 +7,7 @@ const Contact = () => {
         <section style={{
             background: `url(${appoinment})`
         }}>
-            <div className='w-1/2 mx-auto py-16' >
+            <div className='lg:w-1/2 lg:px-0 px-3 mx-auto py-16' >
                 <div className='text-center mb-10'>
                     <h3 className='text-xl text-primary font-bold'>Contact Us</h3>
                     <h2 className='text-4xl text-white' > Stay connected with us</h2 >

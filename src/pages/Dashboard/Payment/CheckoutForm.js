@@ -44,7 +44,7 @@ const CheckoutForm = ({ payBooking }) => {
         if (card == null) {
             return;
         }
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const { error } = await stripe.createPaymentMethod({
             type: 'card',
             card,
         });
@@ -55,7 +55,6 @@ const CheckoutForm = ({ payBooking }) => {
         }
         else {
             setCardError('');
-            // console.log('[PaymentMethod]', paymentMethod);
         }
 
         setSuccess('');

@@ -8,12 +8,11 @@ const Banner = () => {
         <div style={{
             background: `url(${bg})`,
             position: 'center'
-        }} className="hero min-h-screen " >
+        }} className="hero lg:min-h-screen lg:mt-0 lg:mb-0 mb-20 mt-6" >
             <div className="hero-content flex-col gap-10 lg:flex-row-reverse " >
-                {/* banner image */}
-                <img src={chair} className="max-w-sm w-1/2 rounded-lg shadow-2xl" alt='banner' />
-                <div className='w-1/2 '>
-                    <h1 className="text-5xl font-bold">Your New Smile Starts Here</h1>
+                <img src={chair} className="max-w-sm lg:w-1/2 lg:mb-0 mb-5 w-full rounded-lg shadow-2xl" alt='banner' />
+                <div className='lg:w-1/2 '>
+                    <h1 className="lg:text-5xl text-4xl font-bold">Your New Smile Starts Here</h1>
                     <p className="py-6" > Provident cupiditate voluptatem et in.Quaerat fugiat ut assumenda excepturi exercitationem quasi.In deleniti eaque aut repudiandae et a id nisi.</p >
                     <PrimaryButton>get started</PrimaryButton>
                 </div >

@@ -14,7 +14,7 @@ const Payment = () => {
     const { treatment, price, appoinmentDate, slot } = payBooking;
 
     if (navigation.state === 'loading') {
-        return <h2 className='text-4xl font-semibold'>Loading.....</h2>
+        return <h2 className='text-4xl font-semibold'>Loading..... </h2>
     }
 
     return (
